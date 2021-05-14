@@ -24,6 +24,7 @@
   <script>
 photo="";
 status="";
+object=[];
 function preload(){
     photo= loadImage("Image20210507203219.jpg");
 }
@@ -40,8 +41,17 @@ function modelLoaded(){
 }
 function draw(){
     image(photo,0,0,450,270);
-    stroke("#FFOOOO");
-    text("flower",100,150);
+    if(status != ""){
+      for(i=0;i<objects.length;i++){
+        document.getElementById("status").innerHTML="Status: Objects Detected";
+        percent=floor(objects[i].confidence*100);
+        stroke("#FF0000");
+        text(objects[i].label +" "+percent+"%",objects[i].x, objects[i].y);
+        noFill();
+        stroke("#FF0000");
+        rect(objects[i].x, objects[i].y, objects[i].width, objects[i].height);
+      }
+    }
 }
 function gotResult(error,results){
     if(error){
